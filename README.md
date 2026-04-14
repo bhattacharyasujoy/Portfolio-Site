@@ -35,9 +35,6 @@ Live: https://resume.sujoyb.in
 
 ---
 
-
----
-
 ## Cost
 
 ~$1.50/month (serverless)
