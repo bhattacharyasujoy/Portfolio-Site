@@ -1,0 +1,70 @@
+version: 0.2
+
+# buildspec.yml
+# Place this in the ROOT of your CodeCommit repo alongside your HTML/CSS files.
+#
+# This file does two things:
+#   1. Syncs your HTML/CSS to S3 (overwrites changed files, deletes removed ones)
+#   2. Invalidates the CloudFront cache so visitors always get fresh content
+#
+# Environment variables (set in CodeBuild project, not here):
+#   S3_BUCKET          - your S3 bucket name, e.g. resume.sujoyb.in
+#   CLOUDFRONT_DIST_ID - your CloudFront distribution ID, e.g. E1ABC2DEF3GHI
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+
+  build:
+    commands:
+      # Sync all files to S3
+      # --delete removes files from S3 that no longer exist in the repo
+      # --cache-control sets browser caching: HTML no-cache, assets 1 year
+      - echo "Syncing to s3://$S3_BUCKET"
+
+      # HTML files — no cache (always fresh)
+      - |
+        aws s3 sync . s3://$S3_BUCKET \
+          --exclude "*" \
+          --include "*.html" \
+          --cache-control "no-cache, no-store, must-revalidate" \
+          --delete
+
+      # CSS + JS — cache 1 year (use cache-busting filenames if you change these)
+      - |
+        aws s3 sync . s3://$S3_BUCKET \
+          --exclude "*" \
+          --include "*.css" \
+          --include "*.js" \
+          --cache-control "public, max-age=31536000, immutable"
+
+      # Images + fonts + other assets — cache 1 week
+      - |
+        aws s3 sync . s3://$S3_BUCKET \
+          --exclude "*" \
+          --include "*.png" \
+          --include "*.jpg" \
+          --include "*.jpeg" \
+          --include "*.gif" \
+          --include "*.svg" \
+          --include "*.ico" \
+          --include "*.woff" \
+          --include "*.woff2" \
+          --include "*.ttf" \
+          --cache-control "public, max-age=604800"
+
+  post_build:
+    commands:
+      # Invalidate CloudFront so CDN fetches fresh files from S3
+      - echo "Invalidating CloudFront distribution $CLOUDFRONT_DIST_ID"
+      - |
+        aws cloudfront create-invalidation \
+          --distribution-id $CLOUDFRONT_DIST_ID \
+          --paths "/*"
+      - echo "Deploy complete."
+
+artifacts:
+  files:
+    - "**/*"
+  discard-paths: no

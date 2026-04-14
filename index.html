@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sujoy Bhattacharya — DevOps Engineer</title>
+  <meta name="description" content="DevOps Engineer specializing in Kubernetes, CI/CD, and DevSecOps for BFSI clients across the Indian capital markets ecosystem." />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:      #0a0e17;
+      --bg2:     #0f1520;
+      --bg3:     #141b2d;
+      --accent:  #00d4ff;
+      --accent2: #ff6b35;
+      --accent3: #00ff88;
+      --yellow:  #ffd166;
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --muted2:  #94a3b8;
+      --border:  #1e2d45;
+      --card:    #111827;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,14,23,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent3);
+      letter-spacing: 0.1em;
+    }
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content { max-width: 860px; }
+
+    .hero-orb {
+      position: absolute;
+      right: -100px; top: 50%;
+      transform: translateY(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle at center, rgba(0,212,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+      animation: orbPulse 5s ease-in-out infinite;
+    }
+
+    @keyframes orbPulse {
+      0%,100% { transform: translateY(-50%) scale(1); opacity: 0.7; }
+      50%      { transform: translateY(-50%) scale(1.08); opacity: 1; }
+    }
+
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+    .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--accent); }
+
+    .hero-name {
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+    .hero-name .outline {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+    }
+
+    .hero-desc {
+      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--muted2);
+      max-width: 620px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.6s;
+    }
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.8s;
+    }
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-number.orange { color: var(--accent2); }
+    .stat-number.green  { color: var(--accent3); }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.35rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1s;
+    }
+
+    .btn-primary {
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+
+    .btn-secondary {
+      padding: 0.85rem 2rem;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: rgba(0,212,255,0.08); transform: translateY(-2px); }
+
+    .cursor {
+      display: inline-block;
+      width: 3px; height: 1em;
+      background: var(--accent3);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 4rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .section-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent);
+      transition: height 0.3s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .skill-card:hover::before { height: 100%; }
+
+    .skill-card-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .skill-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.15);
+      color: var(--muted2);
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+    .tag:hover { background: rgba(0,212,255,0.12); color: var(--accent); border-color: var(--accent); }
+    .tag.learning {
+      background: rgba(255,209,102,0.07);
+      border-color: rgba(255,209,102,0.25);
+      color: var(--yellow);
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg); }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 2rem;
+      margin-bottom: 4.5rem;
+      position: relative;
+    }
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: 210px; top: 8px; bottom: -4.5rem;
+      width: 1px;
+      background: var(--border);
+    }
+    .exp-item:last-child::before { display: none; }
+
+    .exp-meta { text-align: right; padding-right: 2rem; }
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .exp-company-name {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .exp-location {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .exp-client-note {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .exp-body { padding-left: 2rem; position: relative; }
+    .exp-body::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 10px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .exp-role {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .exp-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent3);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .exp-sub::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .exp-bullets { list-style: none; margin-bottom: 0.5rem; }
+    .exp-bullets li {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--muted2);
+      padding: 0.45rem 0 0.45rem 1.3rem;
+      border-bottom: 1px solid rgba(30,45,69,0.5);
+      position: relative;
+    }
+    .exp-bullets li:last-child { border-bottom: none; }
+    .exp-bullets li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent2);
+      font-size: 0.8rem;
+    }
+    .exp-bullets li strong { color: var(--text); }
+
+    /* ── CERTIFICATIONS ── */
+    #certifications { background: var(--bg2); }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,212,255,0.04), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cert-card:hover { border-color: var(--accent3); transform: translateY(-3px); }
+    .cert-card:hover::after { opacity: 1; }
+
+    .cert-icon-wrap {
+      width: 48px; height: 48px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .cert-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      line-height: 1.4;
+    }
+    .cert-issuer {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .cert-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      padding: 3px 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .cert-badge.active   { background: rgba(0,255,136,0.1);  color: var(--accent3); border: 1px solid rgba(0,255,136,0.25); }
+    .cert-badge.progress { background: rgba(255,209,102,0.1); color: var(--yellow);  border: 1px solid rgba(255,209,102,0.25); }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .project-card:hover { border-color: rgba(0,212,255,0.4); transform: translateY(-4px); }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .project-icon { font-size: 1.5rem; }
+    .project-desc {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--muted2);
+      margin-bottom: 1.25rem;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .project-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .project-link:hover { color: #fff; }
+
+    /* ── BLOG ── */
+    #blog { background: var(--bg2); }
+
+    /* Blog grid for actual posts */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent3), var(--accent));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .blog-card:hover { border-color: rgba(0,255,136,0.35); transform: translateY(-4px); }
+    .blog-card:hover::before { transform: scaleX(1); }
+
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .blog-card-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .blog-card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.2);
+      color: var(--accent3);
+      letter-spacing: 0.04em;
+    }
+    .blog-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .blog-card-excerpt {
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: var(--muted2);
+      margin-bottom: 1.25rem;
+    }
+    .blog-card-read {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+
+    /* Coming soon placeholder for empty blog */
+    .blog-coming-soon {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-style: dashed;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      color: var(--muted);
+    }
+    .blog-coming-soon-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .blog-coming-soon-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted2);
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.06em;
+    }
+    .blog-coming-soon-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .contact-info p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--muted2);
+      margin-bottom: 2rem;
+    }
+
+    .visitor-counter {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .counter-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent3);
+      box-shadow: 0 0 8px var(--accent3);
+      flex-shrink: 0;
+      animation: blink 2s ease-in-out infinite;
+    }
+    .counter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .counter-note {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .counter-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent3);
+      margin-left: auto;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 1.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+    .contact-link:hover { border-color: var(--accent); transform: translateX(6px); }
+    .contact-link-icon {
+      width: 40px; height: 40px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-link-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2px;
+    }
+    .contact-link-value {
+      font-size: 0.85rem;
+      color: var(--muted2);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .footer-left span { color: var(--accent); }
+    .footer-right {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { padding: 7rem 2rem 3rem; }
+      section { padding: 4rem 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem 2rem; }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      #hero { padding: 6rem 1.5rem 3rem; }
+      section { padding: 3.5rem 1.5rem; }
+      .hero-stats { gap: 1.5rem; }
+      .exp-item { grid-template-columns: 1fr; }
+      .exp-item::before { display: none; }
+      .exp-meta { text-align: left; padding-right: 0; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+      .exp-client-note { display: none; }
+      .exp-body { padding-left: 0; }
+      .exp-body::before { display: none; }
+      .section-title { font-size: 1.5rem; }
+      .contact-info h3 { font-size: 1.8rem; }
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 6px 12px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 680px) {
+      .nav-toggle { display: block; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 52px; left: 0; right: 0;
+        background: rgba(10,14,23,0.98);
+        border-bottom: 1px solid var(--border);
+        padding: 1.5rem;
+        gap: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">sujoy<span>@devops</span>:~$<span class="cursor"></span></div>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">menu</button>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-orb"></div>
+    <div class="hero-content">
+      <div class="hero-tag">DevOps Engineer · BFSI · Kubernetes · DevSecOps · Maharashtra, IN</div>
+      <h1 class="hero-name">Sujoy<br><span class="outline">Bhattacharya</span></h1>
+      <p class="hero-desc">
+        3+ years delivering <strong>production-grade CI/CD platforms</strong>, Kubernetes infrastructure,
+        and DevSecOps pipelines across <strong>4 BFSI client engagements</strong> —
+        including <strong>BSE (StarMF)</strong>, <strong>Hitachi Payment Services</strong>,
+        <strong>NDML</strong>, and <strong>CVL (CDSL Ventures)</strong>.
+        Specialized in regulated, air-gapped, and multi-environment deployments
+        across the Indian capital markets ecosystem.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">40%</div>
+          <div class="stat-label">Release Cycle Reduction</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number orange">60%</div>
+          <div class="stat-label">Cluster Setup Time Cut</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number green">99.9%</div>
+          <div class="stat-label">DB Availability</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">45s</div>
+          <div class="stat-label">DB Failover Time</div>
+        </div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#experience" class="btn-primary">View Experience</a>
+        <a href="#contact" class="btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <span class="section-num">01.</span>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">⚙️</div>
+        <div class="skill-card-title">Containers & Orchestration</div>
+        <div class="skill-tags">
+          <span class="tag">Kubernetes</span><span class="tag">Docker</span>
+          <span class="tag">Helm</span><span class="tag">Kustomize</span>
+          <span class="tag">CloudNativePG Operator</span><span class="tag">Podman</span>
+          <span class="tag">Multi-master HA</span><span class="tag">Air-gapped</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🔄</div>
+        <div class="skill-card-title">CI/CD & Release Engineering</div>
+        <div class="skill-tags">
+          <span class="tag">Azure DevOps</span><span class="tag">Jenkins</span>
+          <span class="tag">Git</span><span class="tag">GitOps</span>
+          <span class="tag">IIS Deployments</span><span class="tag">Approval Gates</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🔐</div>
+        <div class="skill-card-title">DevSecOps</div>
+        <div class="skill-tags">
+          <span class="tag">Checkmarx (SAST)</span><span class="tag">Mend SCA</span>
+          <span class="tag">SonarQube</span><span class="tag">Burp Suite (DAST)</span>
+          <span class="tag">Tenable/Nessus</span><span class="tag">RBAC</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">📊</div>
+        <div class="skill-card-title">Monitoring & Observability</div>
+        <div class="skill-tags">
+          <span class="tag">Prometheus</span><span class="tag">Grafana</span>
+          <span class="tag">Alertmanager</span><span class="tag">ELK Stack</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">🗄️</div>
+        <div class="skill-card-title">Databases & Migrations</div>
+        <div class="skill-tags">
+          <span class="tag">PostgreSQL HA</span><span class="tag">Pgpool-II</span>
+          <span class="tag">CloudNativePG</span><span class="tag">MSSQL</span>
+          <span class="tag">Flyway</span><span class="tag">Liquibase</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">☁️</div>
+        <div class="skill-card-title">Infrastructure & Cloud</div>
+        <div class="skill-tags">
+          <span class="tag">Linux (RHEL/Ubuntu)</span><span class="tag">System Hardening</span>
+          <span class="tag">AWS EC2</span><span class="tag">VPC</span>
+          <span class="tag">IAM</span><span class="tag">Route53</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">💻</div>
+        <div class="skill-card-title">Scripting & Automation</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">Bash</span>
+          <span class="tag">Batch scripting</span><span class="tag">API automation</span>
+          <span class="tag">Release pipelines</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-icon">📚</div>
+        <div class="skill-card-title">Currently Learning</div>
+        <div class="skill-tags">
+          <span class="tag learning">Terraform</span>
+          <span class="tag learning">Ansible</span>
+          <span class="tag learning">CKS (Oct 2025)</span>
+          <span class="tag learning">AWS Solution Architect Associate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header reveal">
+      <span class="section-num">02.</span>
+      <h2 class="section-title">Professional Experience</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">SEP 2022 — PRESENT</div>
+        <div class="exp-company-name">Remiges Technologies<br>Pvt. Ltd.</div>
+        <div class="exp-location">📍 Navi Mumbai</div>
+        <div class="exp-client-note">
+          IIT-founded · 200+ employees<br>
+          20+ yr BFSI-focused IT firm<br><br>
+          Clients:<br>
+          BSE (StarMF)<br>
+          Hitachi Payment Services<br>
+          NDML<br>
+          CVL (CDSL Ventures)<br>
+          IFSCA
+        </div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">DevOps Engineer</div>
+        <div class="exp-sub">Kubernetes & Infrastructure</div>
+        <ul class="exp-bullets">
+          <li>Deployed and managed <strong>multi-master Kubernetes clusters</strong> across BSE (StarMF), NDML, and CVL — production, air-gapped, and isolated environments — infrastructure spanning <strong>70+ Linux servers</strong> across DEV/QA/UAT/STAGING/PROD, reducing cluster setup time by <strong>60%</strong>.</li>
+          <li>Implemented <strong>Kubernetes RBAC framework</strong> with L1/L2/L3 operational roles enforcing least-privilege access, directly supporting BFSI compliance requirements.</li>
+          <li>Deployed <strong>CloudNativePG Operator</strong> on Kubernetes for HA PostgreSQL clusters with automatic replication and failover, achieving <strong>99.9% database availability</strong>.</li>
+          <li>Architected <strong>PostgreSQL HA using Pgpool-II</strong> for Hitachi Payment Services, achieving automated failover in under <strong>45 seconds</strong> for payment-critical systems.</li>
+          <li>Developed a <strong>Kustomize-driven deployment framework</strong> enabling single-command production releases across DEV/QA/UAT/PROD and DR environments, reducing deployment errors by <strong>30%</strong>.</li>
+          <li>Managed and hardened <strong>70+ Linux servers</strong> (RHEL/Ubuntu) — user administration, permission management, package updates, and security hardening.</li>
+        </ul>
+        <div class="exp-sub">CI/CD & Release Engineering</div>
+        <ul class="exp-bullets">
+          <li>Designed the <strong>Azure DevOps platform for CVL</strong> supporting <strong>25+ applications</strong> — repository setup, branching strategy, multi-stage pipelines, approval gates, and developer onboarding.</li>
+          <li>Built <strong>Jenkins CI/CD pipelines for BSE (StarMF) and NDML</strong> with SonarQube quality gates and multi-environment staged deployments, reducing release cycle time by <strong>40%</strong>.</li>
+          <li>Delivered end-to-end CI/CD for <strong>30+ applications</strong> across BSE, NDML, and CVL — build pipelines, environment-wise release pipelines (IIS and containerized), multi-stage approval gates, and rollback procedures.</li>
+          <li>Designed <strong>Git repository sync strategy</strong> for air-gapped environments (Non-Prod to Prod) using push mirroring and ADO plugin options, ensuring code integrity across isolated networks.</li>
+        </ul>
+        <div class="exp-sub">DevSecOps</div>
+        <ul class="exp-bullets">
+          <li>Integrated DevSecOps toolchain into CVL's ADO pipelines — <strong>Checkmarx (SAST), Mend SCA, Burp Suite (DAST), Tenable/Nessus</strong> — with <strong>zero Critical/High vulnerability threshold gates</strong> blocking production deployments, improving security compliance by <strong>30%</strong>.</li>
+          <li>Automated <strong>Mend.io container image scanning in an air-gapped on-prem cluster</strong> — pulling images via kubectl, exporting as <code>.tar</code> files on ADO Linux agent, scanning via Mend CLI.</li>
+          <li>Led end-to-end <strong>Tenable/Nessus ADO integration</strong>: SOC requirements, vendor coordination, port whitelisting, dual-approach evaluation, result validation, and client demo.</li>
+          <li>Configured <strong>Burp Suite DAST scans</strong> via ADO CI/CD for UAT/Prod releases; full scans handled separately via portal to avoid pipeline blocking.</li>
+          <li>Integrated <strong>SonarQube SAST</strong> into Jenkins pipelines for BSE (StarMF) and NDML, enforcing code quality gates across all build stages.</li>
+        </ul>
+        <div class="exp-sub">Database & Schema Management</div>
+        <ul class="exp-bullets">
+          <li>Automated <strong>PostgreSQL schema migrations using Flyway</strong> integrated into CI/CD across DEV/QA/UAT/PROD, ensuring consistent releases with rollback support.</li>
+          <li>Developed custom <strong>Bash/batch migration and rollback scripts</strong> for MSSQL schema changes where standard tooling lacked compatibility — no third-party dependency.</li>
+          <li>Led <strong>Liquibase Secure (paid) POC</strong> for MSSQL — evaluating migration automation, rollback, policy enforcement, and drift detection for a regulated BFSI environment.</li>
+        </ul>
+        <div class="exp-sub">Automation & Tooling</div>
+        <ul class="exp-bullets">
+          <li>Automated <strong>release notes generation using Python</strong> — fetching commit data, deploy/approval metadata, and Redmine ticket details from Azure DevOps APIs; developers trigger complete notes from a single ticket number.</li>
+          <li>Optimized Datamatica container image from <strong>10 GB to 5 GB</strong> via Dockerfile refactoring, dependency analysis, and systematic package removal — fully version-controlled.</li>
+          <li>Built and secured a <strong>private container registry</strong> using Podman Registry v2 with TLS authentication (FQDN, DNS, certificates) for all containerized applications in CVL environments.</li>
+          <li>Configured AWS resources (VPC, EC2, Route53, IAM) and developed Bash scripts to automate log rotation, backups, monitoring, and deployment tasks.</li>
+        </ul>
+        <div class="exp-sub">Incident Response & Production Operations</div>
+        <ul class="exp-bullets">
+          <li>Managed production incident response for containerized BFSI applications — <strong>Kubernetes runtime failures</strong>, database connectivity issues, CI/CD breakages across multi-environment infrastructure with rollback execution.</li>
+          <li>Investigated and resolved <strong>CI/CD pipeline failures</strong> across Azure DevOps and Jenkins — deployment agent issues, environment misconfigurations, and pipeline-stage failures.</li>
+          <li>Resolved <strong>container image pull failures and registry authentication issues</strong> in private Podman environments, restoring deployment continuity across Kubernetes clusters.</li>
+          <li>Diagnosed a production <strong>API CORS failure</strong> — requests passed Postman validation but failed in-browser — traced to environment-specific headers and authentication configuration.</li>
+          <li>Worked on <strong>DC/DR setup and drills</strong> for Azure DevOps using MSSQL Always On (two DB servers, one app server) with monthly VM restore testing.</li>
+          <li>Conducted <strong>technical interviews</strong> for fresher DevOps candidates and mentored junior engineers on CI/CD, Kubernetes, and DevSecOps tooling.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-meta">
+        <div class="exp-date">JAN 2022 — JUL 2022</div>
+        <div class="exp-company-name">Experis IT</div>
+        <div class="exp-location">📍 Navi Mumbai</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-role">RF Engineer <span style="font-size:0.85rem;font-weight:400;color:var(--muted)">(Contract)</span></div>
+        <ul class="exp-bullets">
+          <li>Supported telecom RF infrastructure design documentation for AT&amp;T network engineering project.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-header reveal">
+      <span class="section-num">03.</span>
+      <h2 class="section-title">Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon-wrap">⎈</div>
+        <div>
+          <div class="cert-name">Certified Kubernetes Administrator (CKA)</div>
+          <div class="cert-issuer">Linux Foundation</div>
+          <span class="cert-badge active">Active</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon-wrap">🔒</div>
+        <div>
+          <div class="cert-name">Certified Kubernetes Security Specialist (CKS)</div>
+          <div class="cert-issuer">Linux Foundation</div>
+          <span class="cert-badge progress">Appearing Oct 2025</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon-wrap">☁️</div>
+        <div>
+          <div class="cert-name">AWS Certified Cloud Practitioner</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+          <span class="cert-badge active">Active</span>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon-wrap">🔧</div>
+        <div>
+          <div class="cert-name">AWS Solution Architect Associate Engineer (SAA-C03)</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+          <span class="cert-badge progress">In Progress — KodeKloud</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">04.</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-title">Air-Gapped Kubernetes Cluster</div>
+          <div class="project-icon">🔒</div>
+        </div>
+        <p class="project-desc">Multi-master HA Kubernetes cluster in fully isolated, air-gapped environments. Includes private registry mirrors, offline Helm chart repos, and Mend.io image scanning via kubectl + tar export on ADO Linux agent.</p>
+        <div class="project-tags">
+          <span class="tag">Kubernetes</span><span class="tag">Helm</span><span class="tag">Podman Registry</span><span class="tag">RBAC</span><span class="tag">Mend SCA</span>
+        </div>
+        <a href="https://github.com/bhattacharyasujoy" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-title">HA PostgreSQL on Kubernetes</div>
+          <div class="project-icon">🗄️</div>
+        </div>
+        <p class="project-desc">High-availability PostgreSQL using Pgpool-II and CloudNativePG Operator on Kubernetes. Automated failover under 45 seconds with 99.9% uptime SLA for production banking workloads.</p>
+        <div class="project-tags">
+          <span class="tag">PostgreSQL</span><span class="tag">Pgpool-II</span><span class="tag">CloudNativePG</span><span class="tag">Kubernetes</span>
+        </div>
+        <a href="https://github.com/bhattacharyasujoy" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-title">DevSecOps CI/CD Pipeline</div>
+          <div class="project-icon">🔄</div>
+        </div>
+        <p class="project-desc">End-to-end secure pipeline with Jenkins and Azure DevOps integrating Checkmarx, Mend SCA, SonarQube, and Burp Suite. Zero Critical/High threshold gates block production deployments. Reduced release cycle time by 40%.</p>
+        <div class="project-tags">
+          <span class="tag">Jenkins</span><span class="tag">Azure DevOps</span><span class="tag">Checkmarx</span><span class="tag">Mend SCA</span><span class="tag">SonarQube</span>
+        </div>
+        <a href="https://github.com/bhattacharyasujoy" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <!-- ↓ UPDATED: reflects new serverless architecture -->
+          <div class="project-title">Portfolio Site — Cloud Resume Challenge</div>
+          <div class="project-icon">🌐</div>
+        </div>
+        <p class="project-desc">Personal portfolio migrated from EC2 to fully serverless AWS. Static site on S3 + CloudFront + ACM. Visitor counter and geo-logging via Lambda + API Gateway + DynamoDB. CI/CD via CodeCommit → CodePipeline → CodeBuild → S3.</p>
+        <div class="project-tags">
+          <span class="tag">S3</span><span class="tag">CloudFront</span><span class="tag">Lambda</span><span class="tag">API Gateway</span><span class="tag">DynamoDB</span><span class="tag">CodePipeline</span>
+        </div>
+        <a href="#" class="project-link">Currently Live →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <!--
+    ════════════════════════════════════════════════════════════════
+    BLOG SECTION — HOW TO ADD POSTS
+    ════════════════════════════════════════════════════════════════
+    To add a new blog post:
+      1. Copy one <a class="blog-card"> block below
+      2. Fill in: date, tag, title, excerpt
+      3. Set href to your post URL (dev.to, hashnode, medium, or a /blog/slug.html page)
+      4. Delete one <div class="blog-coming-soon"> block if all slots are filled
+    ════════════════════════════════════════════════════════════════
+  -->
+  <section id="blog">
+    <div class="section-header reveal">
+      <span class="section-num">05.</span>
+      <h2 class="section-title">Blog & Write-ups</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="blog-grid">
+
+      <!-- ── REAL POST — duplicate this block for each new post ── -->
+      <a class="blog-card reveal" href="#" target="_blank">
+        <div class="blog-card-meta">
+          <span class="blog-card-date">APR 2026</span>
+          <span class="blog-card-tag">Kubernetes</span>
+        </div>
+        <div class="blog-card-title">Setting Up an Air-Gapped Kubernetes Cluster from Scratch</div>
+        <div class="blog-card-excerpt">How to bootstrap a fully isolated multi-master K8s cluster with private registry mirrors, offline Helm repos, and Mend.io image scanning — without a single outbound internet call.</div>
+        <span class="blog-card-read">Read post →</span>
+      </a>
+
+      <!-- ── COMING SOON placeholders — delete these as you add real posts ── -->
+      <div class="blog-coming-soon reveal">
+        <div class="blog-coming-soon-icon">📝</div>
+        <div>
+          <div class="blog-coming-soon-title">PostgreSQL HA with CloudNativePG</div>
+          <div class="blog-coming-soon-sub">// coming soon</div>
+        </div>
+      </div>
+
+      <div class="blog-coming-soon reveal">
+        <div class="blog-coming-soon-icon">📝</div>
+        <div>
+          <div class="blog-coming-soon-title">DevSecOps Pipeline: Zero Critical/High Gates</div>
+          <div class="blog-coming-soon-sub">// coming soon</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <span class="section-num">06.</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Let's work<br>together.</h3>
+        <p>Open to DevOps, Platform Engineering, and Solution Architect Associate roles — especially in BFSI, fintech, or infrastructure-heavy environments. Feel free to reach out for opportunities or technical discussions.</p>
+
+        <div class="visitor-counter">
+          <div class="counter-dot"></div>
+          <div>
+            <div class="counter-label">Site Visitors</div>
+            <!-- ↓ UPDATED: reflects Lambda + DynamoDB backend -->
+            <div class="counter-note">// powered by Lambda + DynamoDB</div>
+          </div>
+          <div class="counter-value" id="visitor-count">—</div>
+        </div>
+      </div>
+
+      <div class="contact-links reveal">
+        <a href="mailto:sujoybhattacharya1998@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div>
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">sujoybhattacharya1998@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/sujoy-bhattacharya-cloud-devops-engineer" target="_blank" class="contact-link">
+          <div class="contact-link-icon">💼</div>
+          <div>
+            <span class="contact-link-label">LinkedIn</span>
+            <span class="contact-link-value">sujoy-bhattacharya-cloud-devops-engineer</span>
+          </div>
+        </a>
+        <a href="https://github.com/bhattacharyasujoy" target="_blank" class="contact-link">
+          <div class="contact-link-icon">⚡</div>
+          <div>
+            <span class="contact-link-label">GitHub</span>
+            <span class="contact-link-value">github.com/bhattacharyasujoy</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — updated version + hosting info -->
+  <footer>
+    <div class="footer-left"><span>Sujoy Bhattacharya</span> · DevOps Engineer · Maharashtra, IN</div>
+    <div class="footer-right">Built with HTML/CSS/JS · S3 + CloudFront · v3.0</div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 120) current = section.getAttribute('id');
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Close mobile nav on link click
+    navLinks.forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+
+    // ── VISITOR COUNTER ───────────────────────────────────────────────────────
+    // UPDATED: calls Lambda via API Gateway instead of EC2
+    // Old: fetch('/api/visitors', { method: 'POST' })
+    // New: full API Gateway URL below
+    const API_BASE = 'https://xxxxxxxxx.execute-api.ap-south-1.amazonaws.com';
+
+    fetch(`${API_BASE}/api/visitors`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('visitor-count').textContent = d.count.toLocaleString();
+      })
+      .catch(() => {
+        // Fallback: try GET if POST fails (e.g. CORS preflight issue)
+        fetch(`${API_BASE}/api/visitors`)
+          .then(r => r.json())
+          .then(d => {
+            document.getElementById('visitor-count').textContent = d.count.toLocaleString();
+          })
+          .catch(() => {
+            document.getElementById('visitor-count').textContent = '—';
+          });
+      });
+    // ─────────────────────────────────────────────────────────────────────────
+  </script>
+
+</body>
+</html>
